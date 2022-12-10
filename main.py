@@ -20,11 +20,7 @@ def main():
                 break
 
     finally:
-        if contacts_dict.load_contacts_from_file():
-            contacts_dict.save_contacts_to_file()
-        else:
-            contacts_dict.create_contacts_file()
-            contacts_dict.save_contacts_to_file()           
+        contacts_dict.save_contacts_to_file()           
 
 
 if __name__ == '__main__':

@@ -181,20 +181,13 @@ class AddressBook(UserDict):
                 i = count
         if page:
             yield page    
+    
 
-
-    def create_contacts_file(self):
+    def save_contacts_to_file(self):
         with open("contacts_list.csv", "w", newline = "", encoding= "utf-8") as csv_file:
             field_names = ["first_name", "phone", "birthday"]
             writer = csv.DictWriter(csv_file, fieldnames=field_names, delimiter=";")
             writer.writeheader()
-    
-
-    def save_contacts_to_file(self):
-        with open("contacts_list.csv", "a", newline = "", encoding= "utf-8") as csv_file:
-            field_names = ["first_name", "phone", "birthday"]
-            writer = csv.DictWriter(csv_file, fieldnames=field_names, delimiter=";")
-          
             for key in contacts_dict.data:
                 current_record = contacts_dict.data.get(key)
                 
@@ -213,10 +206,14 @@ class AddressBook(UserDict):
             with open("contacts_list.csv", "r", newline = "", encoding= "utf-8") as csv_file:
                 reader = csv.DictReader(csv_file, delimiter=";")
                 for row in reader:
-                    return (row["first_name"], row["phone"], row["birthday"])   
+                    record = Record(row["first_name"])
+                    if row["phone"]:
+                        record.add_phone(row["phone"]) 
+                    if row["birthday"]:
+                        record.add_birthday(row["birthday"])
+                    self.add_record(record)  
         except FileNotFoundError:
             return "The file does not exist."   
-
 
 
 contacts_dict = AddressBook()        

@@ -1,5 +1,5 @@
 from utility import input_func
-from address_book_classes import contacts_dict
+from contacts_file_functions import write_to_file, load_from_file
 
 def main():
     """
@@ -11,7 +11,8 @@ def main():
     Функція повертає відповідь бота
     Бот завершує роботу після слів "good bye" або "close" або "exit"
     """
-    try:        
+    try: 
+        load_from_file.load_contacts_from_file()       
         while True:
             input_string = input("Input command, please: ")
             get_command = input_func(input_string)
@@ -20,7 +21,7 @@ def main():
                 break
 
     finally:
-        contacts_dict.save_contacts_to_file()           
+        write_to_file.save_contacts_to_file()           
 
 
 if __name__ == '__main__':
